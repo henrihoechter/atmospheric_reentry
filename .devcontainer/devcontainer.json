@@ -1,0 +1,56 @@
+{
+    "name": "Hy2Foam",
+    "build": {
+        "dockerfile": "Dockerfile", // Points to your Dockerfile in the directory
+        "context": "."               // Sets the build context to here
+    },
+    "remoteUser": "devuser", // OpenFOAM typically needs to be built as root, and this environment is set up for it.
+                          // If you prefer a non-root user, it requires more advanced Dockerfile setup.
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/devuser/workspace,type=bind",
+    "workspaceFolder": "/home/devuser/workspace",
+
+    // Features specific to your development needs:
+    "features": {
+         "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": true,
+            "installOhMyZsh": true,
+            "upgradePackages": true,
+            "username": "devuser", // <--- Ensure common-utils features are installed for 'devuser'
+            "uid": "auto",       // <--- CRITICAL: Automatically matches host UID
+            "gid": "auto"
+        },
+        "ghcr.io/devcontainers/features/git:1": {}, // Ensure Git is available
+        "ghcr.io/devcontainers/features/python:1": {} // If you use Python scripts with OpenFOAM/hy2foam
+    },
+
+    // VS Code extensions to install inside the container
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "redhat.vscode-yaml", // Useful for YAML files (e.g., controlDict)
+                "ms-vscode.cpptools",     // <--- Essential for C++ development
+                "ms-vscode.cpptools-extension-pack",
+                "ms-python.python"
+            ],
+            "settings": {
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "bash",
+                        "args": ["-l", "-c", "source /opt/OpenFOAM/OpenFOAM-v1706/etc/bashrc && exec bash"]
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    },
+
+    // Commands to run after the container is created and VS Code connects.
+    // This is where you would source OpenFOAM for your bash session.
+    "postCreateCommand": "bash -c 'source /opt/OpenFOAM/OpenFOAM-v1706/etc/bashrc'",
+
+    // Configure the terminal to automatically source bashrc for OpenFOAM
+    "containerEnv": {
+        "FOAM_BASHRC_SOURCE": "/opt/OpenFOAM/OpenFOAM-v1706/etc/bashrc" 
+    }
+}
