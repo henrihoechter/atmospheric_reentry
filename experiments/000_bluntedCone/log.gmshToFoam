@@ -1,0 +1,82 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1706                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : v1706
+Arch   : "LSB;label=32;scalar=64"
+Exec   : gmshToFoam ./constant/backup-polyMesh/bluntedCone.msh
+Date   : Jun 12 2025
+Time   : 12:41:29
+Host   : "d50077dcd431"
+PID    : 56486
+Case   : /home/devuser/workspace/hyStrath/run/hyStrath/hy2Foam/bluntedCone
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Starting to read mesh format at line 2
+Read format version 2.2  ascii 0
+
+Starting to read physical names at line 5
+Physical names:6
+    Surface 1	inlet
+    Surface 2	outlet
+    Surface 3	cone
+    Surface 4	wedge1
+    Surface 5	wedge2
+    Volume 6	interior
+
+Starting to read points at line 14
+Vertices to be read:241401
+Vertices read:241401
+
+Starting to read cells at line 241418
+Cells to be read:361400
+
+Mapping region 3 to Foam patch 0
+Mapping region 1 to Foam patch 1
+Mapping region 4 to Foam patch 2
+Mapping region 5 to Foam patch 3
+Mapping region 2 to Foam patch 4
+Mapping region 6 to Foam cellZone 0
+Cells:
+    total:120000
+    hex  :119800
+    prism:200
+    pyr  :0
+    tet  :0
+
+CellZones:
+Zone	Size
+    0	120000
+
+Skipping tag  at line 602821
+Patch 0 gets name cone
+Patch 1 gets name inlet
+Patch 2 gets name wedge1
+Patch 3 gets name wedge2
+Patch 4 gets name outlet
+
+--> FOAM Warning : 
+    From function Foam::polyMesh::polyMesh(const Foam::IOobject&, const Foam::Xfer<Foam::Field<Foam::Vector<double> > >&, const cellShapeList&, const faceListList&, const wordList&, const wordList&, const Foam::word&, const Foam::word&, const wordList&, bool)
+    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 592
+    Found 241400 undefined faces in mesh; adding to default patch.
+Finding faces of patch 0
+Finding faces of patch 1
+Finding faces of patch 2
+Finding faces of patch 3
+Finding faces of patch 4
+
+FaceZones:
+Zone	Size
+
+Writing zone 0 to cellZone interior and cellSet
+End
+
