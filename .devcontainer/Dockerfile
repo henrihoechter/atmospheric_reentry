@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # 1. Install essential build tools, add the toolchain PPA, and install GCC 7
 RUN apt update && \
-    apt install -y software-properties-common wget git build-essential flex bison cmake libscotch-dev libptscotch-dev bc gnuplot && \
+    apt install -y software-properties-common wget git build-essential flex bison cmake libscotch-dev libptscotch-dev bc gnuplot git-lfs && \
     add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
     apt update && \
     apt install -y gcc-7 g++-7 openmpi-bin openmpi-common libopenmpi-dev && \
@@ -122,6 +122,8 @@ RUN echo "--- Creating hyStrath build target directory: ${HYSTRATH_BUILD_TARGET_
 #     export WM_PROJECT_USER_DIR=${HYSTRATH_BUILD_TARGET_DIR} && \
 #     cd ${HYSTRATH_CLONE_DIR} && \ 
 #     printf '4\n' | bash ./install.sh ${WM_NCOMPPROCS}"
+
+RUN cd /home/devuser/workspace && git lfs install 
 
 # Command to run when the container starts - provides a bash shell with OpenFOAM sourced
 CMD ["bash", "-c", "source /opt/OpenFOAM/OpenFOAM-v1706/etc/bashrc && exec bash"]
