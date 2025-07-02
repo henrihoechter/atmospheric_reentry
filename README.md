@@ -28,3 +28,10 @@ After the container has been built, the hyStrath repository still needs to be bu
 source ${WM_PROJECT_DIR}/etc/bashrc && export WM_PROJECT_USER_DIR=${HYSTRATH_BUILD_TARGET_DIR} && cd ${HYSTRATH_CLONE_DIR} && printf '4\n' | ./install.sh 16
 ```
 After the compilation has finished, you should be able to enter `hy2Foam` into the terminal to see the solver trying to start, but failing due to a missing `controlDict` file. This means everything went according to plan and you are good to go to play around with hypersonic flows :D.
+
+
+## What to find Where?
+
+By default, the working directory of your terminal will be `/home/devuser/workspace`. At the same time, this folder will contain all the files and folders of this repository. Also, you can imagine this workspace as a tunnel to the host operating system of your laptop. In case you generated files which you would like to make available to your host system (e.g. because you would like to see something in ParaView), move these files into `/home/devuser/workspace` and they will appear in the file explorer of your host system at the location where you cloned this repository into. 
+
+The source code of the HyStrath repository is located at `/home/devuser/hyStrath_source`. Copy the example cases to your workspace directory if you want to run, modify these cases. The compiled code is available at `/home/devuser/hyStrath_build` (although I do not expect to ever have to touch this build folder again in the course of this project :D).
