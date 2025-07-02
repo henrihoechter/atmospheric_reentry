@@ -1,0 +1,48 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1706                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : v1706
+Arch   : "LSB;label=32;scalar=64"
+Exec   : createPatch -overwrite
+Date   : Jul 02 2025
+Time   : 09:15:12
+Host   : "cfeab4550081"
+PID    : 12026
+Case   : /home/devuser/hyStrath_source/run/hyStrath/hy2Foam/NASA_MSL_forebody/NASA_MSL_forebody_NR
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From function void* Foam::dlOpen(const Foam::fileName&, bool)
+    in file POSIX.C at line 1321
+    dlopen error : libstrathFiniteVolume.so: cannot open shared object file: No such file or directory
+--> FOAM Warning : 
+    From function bool Foam::dlLibraryTable::open(const Foam::fileName&, bool)
+    in file db/dynamicLibrary/dlLibraryTable/dlLibraryTable.C at line 101
+    could not load "libstrathFiniteVolume.so"
+Create polyMesh for time = 0
+
+Reading "system/createPatchDict"
+
+
+Doing topology modification to order faces.
+
+Not synchronising points.
+
+Removing patches with no faces in them.
+
+Removing zero-sized patch bottom type symmetryPlane at position 5
+Removing patches.
+Writing repatched mesh to 0
+
+End
+
