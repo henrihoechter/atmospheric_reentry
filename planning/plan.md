@@ -16,6 +16,14 @@
 # 2. apollo kapsel 
 - tendenzieller prio, stattdessen fokus auf mehr eigenleistung
 ## real messdaten von case
+- NASA paper (1,2) liefert Daten
+## case mit hy2foam simulieren
+## case mit standard simulieren
+
+# 2. Alternativ: blunted nose cone
+- tendenzieller prio, stattdessen fokus auf mehr eigenleistung
+## real messdaten von case
+- NASA paper (3) liefert Daten
 ## case mit hy2foam simulieren
 ## case mit standard simulieren
 
