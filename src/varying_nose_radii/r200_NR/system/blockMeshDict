@@ -1,0 +1,172 @@
+// The OpenFOAM Project // File: blockMeshDict
+/*-------------------------------------------------------------------------------
+  =========                 | dictionary
+  \\      /  F ield         |
+   \\    /   O peration     | Name:   blockMeshDict
+    \\  /    A nd           | Family: FoamX configuration file
+     \\/     M anipulation  |
+     F O A M                | OpenFOAM version: 2.3
+                              | Product of Nabla Ltd.
+                              | Email: Enquiries@Nabla.co.uk
+-------------------------------------------------------------------------------*/
+// FoamX Case Dictionary.
+
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+    class           dictionary;
+    object          blockMeshDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// IMPORTANT: Assuming CATIA points are in Millimeters (mm).
+// This converts them to Meters (m).
+convertToMeters 0.001; 
+
+vertices
+(
+    // These are your provided CATIA Point.X coordinates, mapped directly to blockMeshDict vertex indices.
+    // Ensure these match the points you intend for each index in your blocks and edges.
+    // Index 0: CATIA 'Point.0'
+    (0.0 5.66014656E-14 2.4712733581E-15) // 0: CATIA Point.0 (Heatshield Apex)
+    // Index 1: CATIA 'Point.1'
+    (100.0 173.040227899 7.55509951118) // 1: CATIA Point.1 (Nose-cone tangency max Y)
+    // Index 2: CATIA 'Point.2'
+    (500.0 403.760531765 17.6285655261) // 2: CATIA Point.2 (Body end max Y)
+    // Index 3: CATIA 'Point.3'
+    (-400.0 3.67044362026E-14 1.60255029353E-15) // 3: CATIA Point.3 (Comp domain apex)
+    // Index 4: CATIA 'Point.4'
+    (-100.0 519.120683697 22.6652985335) // 4: CATIA Point.4 (Comp domain upstream max Y)
+    // Index 5: CATIA 'Point.5'
+    (300.0 749.840987563 32.7387645484) // 5: CATIA Point.5 (Comp domain downstream max Y)
+    // Index 6: CATIA 'Point.6'
+    (100.0 173.040227899 -7.55509951118) // 6: CATIA Point.6 (Nose-cone tangency max Z)
+    // Index 7: CATIA 'Point.7'
+    (500.0 403.760531765 -17.6285655261) // 7: CATIA Point.7 (Body end max Z)
+    // Index 8: CATIA 'Point.8'
+    (-100.0 519.120683697 -22.6652985335) // 8: CATIA Point.8 (Comp domain upstream max Z)
+    // Index 9: CATIA 'Point.9'
+    (300.0 749.840987563 -32.7387645484) // 9: CATIA Point.9 (Comp domain downstream max Z)
+    // Index 10: CATIA 'Point.10'
+    (26.7949192431 99.9048221582 4.36193873653) // 10: CATIA Point.10 (Arc control point Y)
+    // Index 11: CATIA 'Point.11'
+    (-319.615242271 299.714466475 13.0858162096) // 11: CATIA Point.11 (Arc control point Y)
+    // Index 12: CATIA 'Point.12'
+    (26.7949192431 99.9048221582 -4.36193873653) // 12: CATIA Point.12 (Arc control point Z)
+    // Index 13: CATIA 'Point.13'
+    (-319.615242271 299.714466475 -13.0858162096) // 13: CATIA Point.13 (Arc control point Z)
+);
+
+
+blocks
+(
+    // Based on your new 2-block axial split:
+    // Block 0: Upstream section (from domain apex X=-400 to body X=50 / domain X=-150)
+    // Front face: (0 3 4 1) connects: Apex -> Domain_Apex -> Domain_Upstream_Y -> Body_Nose_Y
+    // Back face:  (0 3 8 6) connects: Apex -> Domain_Apex -> Domain_Upstream_Z -> Body_Nose_Z
+    hex (0 3 4 1 0 3 8 6) (200 200 1) simpleGrading (4 1 1)
+
+    // Block 1: Downstream section (from body X=50 / domain X=-150 to body X=500 / domain X=300)
+    // Front face: (1 4 5 2) connects: Body_Nose_Y -> Domain_Upstream_Y -> Domain_Downstream_Y -> Body_End_Y
+    // Back face:  (6 8 9 7) connects: Body_Nose_Z -> Domain_Upstream_Z -> Domain_Downstream_Z -> Body_End_Z
+    hex (1 4 5 2 6 8 9 7) (200 100 1) simpleGrading (4 1 1)
+);
+
+
+edges
+(
+    // Body curves (Nose)
+    // Arc 0-1 (Front Nose Arc: from Point.0 to Point.1)
+    // Control point: Point.10 (26.7949, 99.9048, 4.3619)
+    arc 0 1 (26.7949192431 99.9048221582 4.36193873653) // Uses Point.10 from CATIA
+    // Arc 0-6 (Back Nose Arc: from Point.0 to Point.6)
+    // Control point: Point.12 (26.7949, 99.9048, -4.3619)
+    arc 0 6 (26.7949192431 99.9048221582 -4.36193873653) // Uses Point.12 from CATIA
+
+    // Outer Computational Domain curves (Axial progression)
+    // Arc 3-4 (Front Upstream Domain Arc: from Point.3 to Point.4)
+    // Control point: Point.11 (-319.615, 299.714, 13.0858)
+    arc 3 4 (-319.615242271 299.714466475 13.0858162096) // Uses Point.11 from CATIA
+    // Arc 3-8 (Back Upstream Domain Arc: from Point.3 to Point.8)
+    // Control point: Point.13 (-319.615, 299.714, -13.0858)
+    arc 3 8 (-319.615242271 299.714466475 -13.0858162096) // Uses Point.13 from CATIA
+
+    // Note: Other edges (like 1-2, 4-5, 5-2, 6-7, 8-9, 9-7) are now straight lines
+    // unless you provide arc definitions for them.
+
+    // Arcs connecting the two wedge planes (circumferential arcs, Z=0 for control point)
+    // These define the circumferential curvature of the blocks.
+    // The control point for these arcs is on the plane of symmetry (Z=0).
+    // arc 1 6 (50.0 86.5201139496 0.0) // Circ. arc between Point.1 and Point.6 (Nose tangency)
+    // arc 2 7 (500.0 346.080455798 0.0) // Circ. arc between Point.2 and Point.7 (Body end)
+
+    // arc 4 8 (-150.0 432.600569748 0.0) // Circ. arc between Point.4 and Point.8 (Domain upstream)
+    // arc 5 9 (300.0 692.160911596 0.0) // Circ. arc between Point.5 and Point.9 (Domain downstream)
+);
+
+
+boundary
+(
+ inlet
+  {
+    type patch;
+    faces
+    (
+    (4 3 3 8)
+    (4 8 9 5)
+    );
+  }
+
+  object
+  {
+    type wall;
+    faces
+    (
+    (1 0 0 6)
+    (1 6 7 2)
+    );
+  }
+  outlet
+  {
+    type patch;
+    faces
+    (
+      (5 2 7 9) 
+    );
+   }
+  front
+  {
+    type wedge;
+    faces
+    (
+      (3 4 1 0)
+      (4 5 2 1)
+    );
+   }
+  back
+  {
+    type wedge;
+    faces
+    (
+    (3 0 6 8)
+    (8 6 7 9)
+    );
+   }
+
+ bottom
+ {
+    type symmetryPlane;
+    faces
+    (
+      (0 3 3 0)
+    );
+ }
+);
+
+mergePatchPairs
+(
+);
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
