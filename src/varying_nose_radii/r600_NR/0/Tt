@@ -33,7 +33,7 @@ boundaryField
     {
         type            nonEqSmoluchowskiJumpT;
         accommodationCoeff 1;
-        Twall           uniform $Twall;
+        Twall           $Twall;
         value           uniform $Twall;
     }
     

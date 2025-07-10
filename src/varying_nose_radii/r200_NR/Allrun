@@ -14,8 +14,6 @@ nProcs=4
 runApplication blockMesh
 runApplication createPatch -overwrite 
 
-cp -r backup_NR_0.0014 0.0014
-
 if [ $nProcs -eq 1 ] ; then
   runApplication hy2Foam
 else
