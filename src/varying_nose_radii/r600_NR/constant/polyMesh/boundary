@@ -1,12 +1,13 @@
 /*--------------------------------*- C++ -*----------------------------------*\
-  =========                 |
-  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
-   \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  12
-     \\/     M anipulation  |
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1706                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
+    version     2.0;
     format      ascii;
     class       polyBoundaryMesh;
     location    "constant/polyMesh";
@@ -14,7 +15,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-6
+5
 (
     inlet
     {
@@ -25,7 +26,7 @@ FoamFile
     object
     {
         type            wall;
-        inGroups        List<word> 1(wall);
+        inGroups        1(wall);
         nFaces          300;
         startFace       119800;
     }
@@ -38,23 +39,16 @@ FoamFile
     front
     {
         type            wedge;
-        inGroups        List<word> 1(wedge);
+        inGroups        1(wedge);
         nFaces          60000;
         startFace       120300;
     }
     back
     {
         type            wedge;
-        inGroups        List<word> 1(wedge);
+        inGroups        1(wedge);
         nFaces          60000;
         startFace       180300;
-    }
-    bottom
-    {
-        type            symmetryPlane;
-        inGroups        List<word> 1(symmetryPlane);
-        nFaces          0;
-        startFace       240300;
     }
 )
 
