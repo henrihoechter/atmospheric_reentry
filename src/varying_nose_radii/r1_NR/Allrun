@@ -1,0 +1,23 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # run from this directory
+
+nProcs=1
+if [ $# -ne 0 ]
+  then nProcs=$1;
+fi
+
+nProcs=4
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+runApplication blockMesh
+runApplication createPatch -overwrite 
+
+if [ $nProcs -eq 1 ] ; then
+  runApplication hy2Foam
+else
+  runApplication decomposePar -latestTime
+  mpirun -np $nProcs hy2Foam -parallel > log.hy2Foam 2>&1
+  runApplication reconstructPar -latestTime
+fi
